@@ -8,7 +8,6 @@ authors = [{ name = "Alpic" }]
 keywords = ["mcp", "llm", "alpic", "python"]
 dependencies = [
   "mcp>=1.13.0",
-  "aequitas==0.42.0",
   "pandas==2.1.4",
   "numpy==1.26.4",
   "scipy==1.11.4",
@@ -19,4 +18,5 @@ dependencies = [
   "mcp",
   "witwidget>=1.8.1",
   "grpcio<1.66",
+  "ml-dtypes<0.4.0",
 ]
