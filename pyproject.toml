@@ -16,7 +16,6 @@ dependencies = [
   "fairlearn>=0.12.0",
   "ipywidgets>=8.1.7",
   "mcp",
-  "witwidget>=1.8.1",
   "grpcio<1.66",
   "ml-dtypes<0.4.0",
 ]
