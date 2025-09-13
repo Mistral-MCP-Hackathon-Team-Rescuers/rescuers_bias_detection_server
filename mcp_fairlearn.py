@@ -6,7 +6,6 @@ MCP Server Template
 from mcp.server.fastmcp import FastMCP
 from pydantic import Field
 
-import mcp.types as types
 
 mcp = FastMCP("Echo Server", port=3000, stateless_http=True, debug=True)
 
