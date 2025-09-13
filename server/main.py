@@ -1,3 +1,4 @@
+
 """
 MCP Server Template
 """
