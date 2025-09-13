@@ -19,4 +19,5 @@ dependencies = [
   "mcp",
   "witwidget>=1.8.1",
   "grpcio<1.66",
+  "ml-dtypes<0.4.0",
 ]
