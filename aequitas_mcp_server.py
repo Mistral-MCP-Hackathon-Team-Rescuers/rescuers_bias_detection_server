@@ -1,4 +1,4 @@
-# mcp_aequitas_server.py
+# aequitas_mcp_server.py
 # Works with DB (SQLAlchemy) and large CSV/Parquet; Pydantic-safe type hints.
 
 from typing import Optional, Literal, Any
@@ -15,7 +15,8 @@ from aequitas.group import Group
 from aequitas.bias import Bias
 from aequitas.fairness import Fairness
 
-mcp = FastMCP("Aequitas MCP Server", port=3000, stateless_http=True, debug=True)
+# Remove port specification for FastAPI mounting
+mcp = FastMCP("Aequitas MCP Server", stateless_http=True, debug=True)
 
 # ------------------------------
 # In-memory store for generated reports
@@ -299,7 +300,7 @@ def compute_bias_report_sql(
     conn_url: Optional[str] = None,
     sql: Optional[str] = None,
     table: Optional[str] = None,
-    schema: Optional[str] = None,
+    db_schema: Optional[str] = None,
     params: Optional[dict[str, Any]] = None,
     limit: Optional[int] = None,
     label_col: str = "label",
@@ -318,7 +319,7 @@ def compute_bias_report_sql(
         "conn_alias": conn_alias,
         "query": sql,
         "table": table,
-        "schema": schema,
+        "schema": db_schema,
         "params": params or {},
         "limit": limit,
     })
@@ -342,7 +343,7 @@ def compute_bias_report_sql(
         "sql_meta": {
             "conn_alias": conn_alias,
             "table": table,
-            "schema": schema,
+            "schema": db_schema,
             "limit": limit,
             "query_present": bool(sql),
         }
@@ -523,13 +524,3 @@ def prompt_choose_metrics(profile: Literal["punitive", "assistive"], notes: str 
         "- assistive: avoid false negatives (suggest fnr_parity, impact_parity, or equalized odds variants).\n"
         f"Notes: {notes}\n"
     )
-
-# ------------------------------
-# Entrypoint
-# ------------------------------
-if __name__ == "__main__":
-    # Usage: python mcp_aequitas_server.py [stdio|http|streamable-http|sse] [host] [port]
-    transport = sys.argv[1] if len(sys.argv) > 1 else "streamable-http"
-    host = sys.argv[2] if len(sys.argv) > 2 else "0.0.0.0"
-    port = int(sys.argv[3]) if len(sys.argv) > 3 else 8080
-    mcp.run(transport="streamable-http")
